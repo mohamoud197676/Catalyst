@@ -1,0 +1,4 @@
+SEC_USER_AGENT secret is EMPTY on this repository
+--user-agent 'Your Name you@example.com' is required for SEC requests
+run: 2026-11-17T18:07:25Z
+66 passed, 4 warnings in 2.25s
