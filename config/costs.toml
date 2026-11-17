@@ -1,0 +1,170 @@
+# Fee and cost inputs. Every row carries verified = true/false. The cost model names every
+# unverified input it touched in its output, so an estimate can never look firmer than it is.
+# Verified IBKR rows were read 2026-11-16 from
+#   https://www.interactivebrokers.co.uk/en/pricing/commissions-stocks.php
+
+[[fee]]
+broker = "IBKR"
+plan = "FIXED"
+component = "commission_per_share"
+value = 0.005
+unit = "USD/share"
+effective_from = "2026-11-16"
+verified = true
+
+[[fee]]
+broker = "IBKR"
+plan = "FIXED"
+component = "commission_min_per_order"
+value = 1.0
+unit = "USD"
+effective_from = "2026-11-16"
+verified = true
+
+[[fee]]
+broker = "IBKR"
+plan = "FIXED"
+component = "commission_max_pct_of_value"
+value = 0.01
+unit = "fraction"
+effective_from = "2026-11-16"
+verified = true
+
+[[fee]]
+broker = "IBKR"
+plan = "TIERED"
+component = "commission_per_share"
+value = 0.0035
+unit = "USD/share"
+effective_from = "2026-11-16"
+verified = true
+note = "First tier, up to 300,000 shares a month"
+
+[[fee]]
+broker = "IBKR"
+plan = "TIERED"
+component = "commission_min_per_order"
+value = 0.35
+unit = "USD"
+effective_from = "2026-11-16"
+verified = true
+
+[[fee]]
+broker = "IBKR"
+plan = "TIERED"
+component = "commission_max_pct_of_value"
+value = 0.01
+unit = "fraction"
+effective_from = "2026-11-16"
+verified = true
+note = "Page also says 0.5% in a note. 1.0% used as the costlier reading."
+
+[[fee]]
+broker = "IBKR"
+plan = "TIERED"
+component = "clearing_per_share"
+value = 0.0002
+unit = "USD/share"
+effective_from = "2026-11-16"
+verified = true
+note = "NSCC/DTC, capped at 0.5% of trade value"
+
+[[fee]]
+broker = "IBKR"
+plan = "TIERED"
+component = "exchange_per_share"
+value = 0.003
+unit = "USD/share"
+effective_from = "2026-11-16"
+verified = false
+note = "Placeholder for a liquidity-taking order. Real value depends on venue."
+
+[[fee]]
+broker = "IBKR"
+plan = "ALL"
+component = "sec_fee_per_usd_sold"
+value = 2.06e-05
+unit = "fraction of sale value"
+effective_from = "2026-11-16"
+verified = true
+note = "Sells only"
+
+[[fee]]
+broker = "IBKR"
+plan = "ALL"
+component = "finra_taf_per_share_sold"
+value = 0.0
+unit = "USD/share"
+effective_from = "2026-10-01"
+effective_to = "2027-01-01"
+verified = true
+note = "IBKR page shows a fee holiday for trades 1 Oct to 31 Dec 2026."
+
+[[fee]]
+broker = "IBKR"
+plan = "ALL"
+component = "finra_taf_per_share_sold"
+value = 0.000195
+unit = "USD/share"
+effective_from = "2027-01-01"
+verified = false
+note = "Rate after the holiday is NOT confirmed. Placeholder. Re-read in January 2027."
+
+[[fee]]
+broker = "IBKR"
+plan = "ALL"
+component = "cat_fee_per_share"
+value = 3e-06
+unit = "USD/share"
+effective_from = "2026-11-16"
+verified = true
+note = "Both sides"
+
+[[fee]]
+broker = "MODEL"
+plan = "ALL"
+component = "impact_coefficient"
+value = 1.0
+unit = "x sigma x sqrt(participation)"
+effective_from = "2026-11-16"
+verified = false
+note = "Square-root impact law. Coefficient near 1 is a textbook starting point for liquid stocks. Micro-caps are likely worse. Calibrate on paper fills."
+
+[[fee]]
+broker = "MODEL"
+plan = "ALL"
+component = "max_participation"
+value = 0.01
+unit = "fraction of window volume"
+effective_from = "2026-11-16"
+verified = true
+note = "Design rule, not a market fact."
+
+[[fee]]
+broker = "MODEL"
+plan = "ALL"
+component = "borrow_collateral_markup"
+value = 1.02
+unit = "x position value"
+effective_from = "2026-11-16"
+verified = false
+note = "IBKR is understood to charge the fee on 102% of value over a 360-day year. Not re-read today."
+
+[[fee]]
+broker = "MODEL"
+plan = "ALL"
+component = "borrow_day_count"
+value = 360
+unit = "days"
+effective_from = "2026-11-16"
+verified = false
+
+[[fee]]
+broker = "MODEL"
+plan = "ALL"
+component = "fx_cost_bps"
+value = 3.0
+unit = "bps of converted value"
+effective_from = "2026-11-16"
+verified = false
+note = "GBP to USD conversion. IBKR FX commission and its minimum not read today."

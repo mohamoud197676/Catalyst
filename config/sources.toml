@@ -1,0 +1,97 @@
+# Capability registry. An adapter may only call a source whose status meets its minimum.
+#
+#   VERIFIED_LIVE  observed working against the live service
+#   VERIFIED_DOC   confirmed in the provider's current official documentation, not yet run live
+#   PARTIAL        documented in outline; a detail the code depends on is still unconfirmed
+#   UNVERIFIED     believed to exist; not confirmed. Adapters refuse to use it.
+#   BLOCKED        confirmed unavailable for this project
+#
+# Checked 2026-11-16. Re-check any row older than 90 days before relying on it.
+
+[edgar_submissions]
+name = "SEC EDGAR submissions API"
+capability = "Filing history per issuer with acceptance timestamps; issuer names, tickers, former names"
+official_doc_url = "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+status = "VERIFIED_LIVE"
+verified_on = "2026-11-16"
+notes = "Endpoint documented. Response read live for CIK 320193 in a browser: columnar arrays incl. accessionNumber, filingDate, reportDate, acceptanceDateTime. acceptanceDateTime is not named in SEC docs; observed values are true UTC (an 02:54Z stamp cannot be Eastern, EDGAR opens 06:00 ET). No key. Not reachable from the build sandbox, so the fetch code itself has not run live."
+
+[edgar_fair_access]
+name = "SEC fair access policy"
+capability = "10 requests per second per user; declared User-Agent"
+official_doc_url = "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data"
+status = "VERIFIED_DOC"
+verified_on = "2026-11-16"
+notes = "Client is throttled to 5 req/s, half the limit."
+
+[edgar_index]
+name = "SEC EDGAR daily and full index"
+capability = "Market-wide list of filings by day: company, form type, CIK, date filed, file name"
+official_doc_url = "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data"
+status = "PARTIAL"
+verified_on = "2026-11-16"
+notes = "Fields documented. Index carries date filed only, no acceptance time. Exact line layout of master index not confirmed against a live file."
+
+[edgar_bulk]
+name = "SEC EDGAR nightly bulk submissions.zip"
+capability = "All filers' submission history in one archive, rebuilt about 03:00 ET; includes dead companies"
+official_doc_url = "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+status = "VERIFIED_DOC"
+verified_on = "2026-11-16"
+notes = "Backfill route for the survivorship-free issuer list."
+
+[sec_ftd]
+name = "SEC fails-to-deliver data"
+capability = "Twice-monthly: settlement date, CUSIP, symbol, fail quantity, description, price. Feb 2004 onward"
+official_doc_url = "https://www.sec.gov/data-research/sec-markets-data/fails-deliver-data"
+status = "VERIFIED_DOC"
+verified_on = "2026-11-16"
+notes = "Pipe-delimited text in a zip. Balances are cumulative, not daily new fails, and are not proof of short selling. Used as a borrow-stress proxy and as a free CUSIP-symbol map that includes delisted names."
+
+[finra_short_volume]
+name = "FINRA daily short sale volume files"
+capability = "Daily off-exchange short volume by symbol"
+official_doc_url = "https://www.finra.org/finra-data/browse-catalog/short-sale-volume-data/daily-short-sale-volume-files"
+status = "PARTIAL"
+verified_on = "2026-11-16"
+notes = "URL pattern cdn.finra.org/equity/regsho/daily/CNMSshvol<YYYYMMDD>.txt documented; consolidated file starts 2018-08-01. Column layout is in a linked PDF not yet read. Regular hours, FINRA-reported trades only."
+
+[ibkr_shortstock_ftp]
+name = "IBKR public short stock availability FTP"
+capability = "Shares available to borrow and indicative fee and rebate rates by symbol, no account needed"
+official_doc_url = "https://ibkb.interactivebrokers.com/article/2024"
+status = "PARTIAL"
+verified_on = "2026-11-16"
+notes = "Host ftp2.interactivebrokers.com, user shortstock, empty password; fields symbol, currency, name, IBKR contract id, ISIN, fee rates, shares available: documented. File names, delimiter and header line are shown only as an image in the article, so the parser is header-driven and refuses layouts it does not recognise. IBKR states the list is not real time and availability can vanish before settlement."
+
+[ibkr_tws_api]
+name = "IBKR TWS API market data"
+capability = "Shortable (tick 46) and Shortable Shares (tick 89) via generic tick 236"
+official_doc_url = "https://www.interactivebrokers.com/docs/tws-api/doc/md/streaming-data.md"
+status = "PARTIAL"
+verified_on = "2026-11-16"
+notes = "Tick ids documented. NOT documented on the page read: a fee-rate tick, whether these ticks populate on a paper account, and the required running software. No adapter is built until M has an account and these are confirmed."
+
+[ibkr_commissions]
+name = "IBKR UK commission schedule, US stocks"
+capability = "Fixed and tiered per-share rates, minimums, regulatory pass-throughs"
+official_doc_url = "https://www.interactivebrokers.co.uk/en/pricing/commissions-stocks.php"
+status = "VERIFIED_DOC"
+verified_on = "2026-11-16"
+notes = "Tiered maximum is stated two ways on the page (1.0% in the table, 0.5% in a note); the model uses 1.0%, the costlier reading."
+
+[massive_rest]
+name = "Massive (formerly Polygon) stocks REST API"
+capability = "Bars covering pre-market, regular and after-hours; splits; dividends; ticker events; delisted tickers; short interest; short volume"
+official_doc_url = "https://massive.com/docs/rest/stocks/overview"
+status = "VERIFIED_DOC"
+verified_on = "2026-11-16"
+notes = "Endpoints confirmed in docs. Ticker events is marked experimental. Trades and NBBO quotes are on 'select plans', tier not stated. History depth per tier not confirmed. No key held, nothing run live."
+
+[trading212_api]
+name = "Trading 212 public API"
+capability = "Invest and Stocks ISA accounts only"
+official_doc_url = "https://docs.trading212.com/api/section/general-information/api-limitations"
+status = "BLOCKED"
+verified_on = "2026-11-16"
+notes = "Beta. No CFD account access, so no short side. Not used."

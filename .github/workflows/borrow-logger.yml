@@ -1,0 +1,29 @@
+# UNTESTED. Archives IBKR's public short-stock file every 30 minutes on US trading days.
+# Whether GitHub's runners can reach IBKR's FTP host has not been confirmed; run it once by
+# hand (Actions > borrow-logger > Run workflow) before trusting the schedule.
+# Scheduled runs on GitHub can start late or be skipped under load: gaps must be measured,
+# not assumed away. A machine you control is the more dependable host.
+name: borrow-logger
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7,37 9-23 * * 1-5"      # UTC; covers 04:00-19:00 New York all year
+permissions:
+  contents: write
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install exchange_calendars
+      - run: python scripts/fetch_borrow_raw.py usa
+      - run: git pull --rebase || true
+      - run: |
+          git config user.name "borrow-logger"
+          git config user.email "borrow-logger@users.noreply.github.com"
+          git add data/borrow
+          git diff --cached --quiet || git commit -m "borrow snapshot $(date -u +%FT%TZ)"
+          git push

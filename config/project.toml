@@ -1,0 +1,34 @@
+# Project parameters. Set by M on 2026-11-16.
+[project]
+name = "catalyst"
+base_currency = "GBP"
+starting_capital = 2500
+stretch_target = 100000
+ambition_months = 6
+
+# The stretch target and ambition are REPORTED AGAINST. They are never read by sizing or
+# risk code; tests/test_guards.py fails if catalyst.paper or catalyst.costs import them.
+
+[execution]
+mode = "PAPER"        # the only value the code accepts
+
+[books.LONG]
+share_of_capital = 0.6
+max_positions = 3
+risk_per_trade = 0.005
+daily_loss_stop = 0.02
+
+[books.SHORT]
+share_of_capital = 0.4
+max_positions = 2
+risk_per_trade = 0.005
+daily_loss_stop = 0.02
+max_single_notional = 0.10      # of total equity
+max_fee_rate_pct = 25.0         # annualised borrow fee cap
+borrow_max_age_minutes = 30     # a locate older than this is treated as no locate
+min_margin_equity_usd = 2000    # broker floor for margin and short orders
+
+[reactions]
+latencies_s = [0, 60, 300]              # 0 = theoretical, 60/300 = achievable entry delay
+max_ref_staleness_s = 900               # reference price older than this is flagged STALE_REF
+windows = ["5m", "30m", "session_end", "next_open", "next_close", "5d_close"]
