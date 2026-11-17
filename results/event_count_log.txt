@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/runner/work/Catalyst/Catalyst/scripts/count_events.py", line 135, in <module>
+    raise SystemExit(main(*(int(a) for a in sys.argv[1:])))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Catalyst/Catalyst/scripts/count_events.py", line 46, in main
+    client = EdgarClient(ua)
+             ^^^^^^^^^^^^^^^
+  File "/home/runner/work/Catalyst/Catalyst/src/catalyst/edgar/client.py", line 30, in __init__
+    raise ValueError("SEC asks for a User-Agent naming the requester and a contact email, "
+ValueError: SEC asks for a User-Agent naming the requester and a contact email, e.g. 'Jane Smith jane@example.com'
