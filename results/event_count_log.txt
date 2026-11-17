@@ -1,10 +1,94 @@
-Traceback (most recent call last):
-  File "/home/runner/work/Catalyst/Catalyst/scripts/count_events.py", line 135, in <module>
-    raise SystemExit(main(*(int(a) for a in sys.argv[1:])))
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/Catalyst/Catalyst/scripts/count_events.py", line 46, in main
-    client = EdgarClient(ua)
-             ^^^^^^^^^^^^^^^
-  File "/home/runner/work/Catalyst/Catalyst/src/catalyst/edgar/client.py", line 30, in __init__
-    raise ValueError("SEC asks for a User-Agent naming the requester and a contact email, "
-ValueError: SEC asks for a User-Agent naming the requester and a contact email, e.g. 'Jane Smith jane@example.com'
+indexed 2010: 2090 trigger filings so far
+indexed 2011: 4066 trigger filings so far
+indexed 2012: 5638 trigger filings so far
+indexed 2013: 7211 trigger filings so far
+indexed 2014: 8841 trigger filings so far
+indexed 2015: 10468 trigger filings so far
+indexed 2016: 11964 trigger filings so far
+indexed 2017: 13377 trigger filings so far
+indexed 2018: 14734 trigger filings so far
+indexed 2019: 15895 trigger filings so far
+indexed 2020: 17101 trigger filings so far
+indexed 2021: 18704 trigger filings so far
+indexed 2022: 19924 trigger filings so far
+indexed 2023: 21238 trigger filings so far
+indexed 2024: 22386 trigger filings so far
+indexed 2025: 23555 trigger filings so far
+facts fetched for 200 companies
+facts fetched for 400 companies
+facts fetched for 600 companies
+facts fetched for 800 companies
+facts fetched for 1000 companies
+facts fetched for 1200 companies
+facts fetched for 1400 companies
+facts fetched for 1600 companies
+facts fetched for 1800 companies
+facts fetched for 2000 companies
+facts fetched for 2200 companies
+facts fetched for 2400 companies
+facts fetched for 2600 companies
+facts fetched for 2800 companies
+facts fetched for 3000 companies
+facts fetched for 3200 companies
+facts fetched for 3400 companies
+facts fetched for 3600 companies
+facts fetched for 3800 companies
+facts fetched for 4000 companies
+facts fetched for 4200 companies
+facts fetched for 4400 companies
+facts fetched for 4600 companies
+facts fetched for 4800 companies
+facts fetched for 5000 companies
+facts fetched for 5200 companies
+facts fetched for 5400 companies
+facts fetched for 5600 companies
+facts fetched for 5800 companies
+facts fetched for 6000 companies
+facts fetched for 6200 companies
+facts fetched for 6400 companies
+facts fetched for 6600 companies
+facts fetched for 6800 companies
+facts fetched for 7000 companies
+facts fetched for 7200 companies
+facts fetched for 7400 companies
+facts fetched for 7600 companies
+{
+ "started": "2026-11-17T18:21:51+00:00",
+ "years": [
+  2010,
+  2025
+ ],
+ "index_rows": 16716403,
+ "trigger_filings": 23555,
+ "subject_ambiguous": 4526,
+ "candidates": 19029,
+ "fundamentals_missing": 7966,
+ "burning_with_net_cash": 4798,
+ "upper_bound_events": 3045,
+ "upper_bound_holdout": 1371,
+ "by_year": {
+  "2010": 1,
+  "2011": 48,
+  "2012": 245,
+  "2013": 212,
+  "2014": 226,
+  "2015": 214,
+  "2016": 198,
+  "2017": 153,
+  "2018": 189,
+  "2019": 188,
+  "2020": 170,
+  "2021": 275,
+  "2022": 256,
+  "2023": 281,
+  "2024": 190,
+  "2025": 199
+ },
+ "by_trigger": {
+  "ACTIVIST_13D": 2943,
+  "TENDER_OFFER": 102
+ },
+ "requests": 7338,
+ "finished": "2026-11-17T19:15:41+00:00",
+ "verdict": "CONTINUE: upper bound clears 150 total and 60 holdout"
+}
