@@ -1,0 +1,31 @@
+# Verification pass: odd-lot offer details and an audit of the event count's subject-company rule.
+name: verify
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/verify.py", ".github/workflows/verify.yml"]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install exchange_calendars
+      - name: verify
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python scripts/verify.py 2>&1 | tee results/verification_log.txt
+      - name: commit results
+        if: always()
+        run: |
+          git config user.name "catalyst-bot"
+          git config user.email "catalyst-bot@users.noreply.github.com"
+          git add results
+          git diff --cached --quiet || git commit -m "verification $(date -u +%FT%TZ)"
+          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep $((i*7)); done
