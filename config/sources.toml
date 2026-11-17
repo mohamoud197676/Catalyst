@@ -14,7 +14,7 @@ capability = "Filing history per issuer with acceptance timestamps; issuer names
 official_doc_url = "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
 status = "VERIFIED_LIVE"
 verified_on = "2026-11-16"
-notes = "Endpoint documented. Response read live for CIK 320193 in a browser: columnar arrays incl. accessionNumber, filingDate, reportDate, acceptanceDateTime. acceptanceDateTime is not named in SEC docs; observed values are true UTC (an 02:54Z stamp cannot be Eastern, EDGAR opens 06:00 ET). No key. Not reachable from the build sandbox, so the fetch code itself has not run live."
+notes = "Endpoint documented. Response read live for CIK 320193 in a browser: columnar arrays incl. accessionNumber, filingDate, reportDate, acceptanceDateTime. acceptanceDateTime is not named in SEC docs; observed values are true UTC. Cross-checked 2026-11-17: JSON 2026-11-12T23:58:20Z equals the filing header <ACCEPTANCE-DATETIME>20261112185820 read as Eastern time (accession 0001140361-26-043484). No key. Not reachable from the build sandbox, so the fetch code itself has not run live."
 
 [edgar_fair_access]
 name = "SEC fair access policy"
