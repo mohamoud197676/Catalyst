@@ -60,9 +60,9 @@ notes = "URL pattern cdn.finra.org/equity/regsho/daily/CNMSshvol<YYYYMMDD>.txt d
 name = "IBKR public short stock availability FTP"
 capability = "Shares available to borrow and indicative fee and rebate rates by symbol, no account needed"
 official_doc_url = "https://ibkb.interactivebrokers.com/article/2024"
-status = "PARTIAL"
-verified_on = "2026-11-16"
-notes = "Host ftp2.interactivebrokers.com, user shortstock, empty password; fields symbol, currency, name, IBKR contract id, ISIN, fee rates, shares available: documented. File names, delimiter and header line are shown only as an image in the article, so the parser is header-driven and refuses layouts it does not recognise. IBKR states the list is not real time and availability can vanish before settlement."
+status = "VERIFIED_LIVE"
+verified_on = "2026-11-17"
+notes = "First live pull 2026-11-17 18:09Z from a GitHub runner: 19,971 rows, declared row count matched. Layout: '#BOF|YYYY.MM.DD|HH:MM:SS' (about 5 minutes before capture, so New York time), header '#SYM|CUR|NAME|CON|ISIN|REBATERATE|FEERATE|AVAILABLE|FIGI|', '#EOF|rowcount'. Includes bonds and OTC names. IBKR states the list is not real time and availability can vanish before settlement. FIGI column not yet stored."
 
 [ibkr_tws_api]
 name = "IBKR TWS API market data"
