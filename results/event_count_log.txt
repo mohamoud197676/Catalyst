@@ -53,7 +53,7 @@ facts fetched for 7200 companies
 facts fetched for 7400 companies
 facts fetched for 7600 companies
 {
- "started": "2026-11-17T18:21:51+00:00",
+ "started": "2026-11-17T20:31:44+00:00",
  "years": [
   2010,
   2025
@@ -62,6 +62,27 @@ facts fetched for 7600 companies
  "trigger_filings": 23555,
  "subject_ambiguous": 4526,
  "candidates": 19029,
+ "positive_adjusted_cash": 1678,
+ "with_public_float": 2807,
+ "below_cash_proxy_total": 285,
+ "below_cash_proxy_holdout": 143,
+ "below_cash_proxy_by_year": {
+  "2012": 19,
+  "2013": 17,
+  "2014": 28,
+  "2015": 23,
+  "2016": 11,
+  "2017": 13,
+  "2018": 13,
+  "2019": 18,
+  "2020": 17,
+  "2021": 27,
+  "2022": 18,
+  "2023": 32,
+  "2024": 20,
+  "2025": 29
+ },
+ "proxy_note": "Public float (non-affiliate market value, from the latest annual report cover known on the filing date) understates market value, so this proxy over-counts below-cash events. It is still an upper bound, tighter than the first.",
  "fundamentals_missing": 7966,
  "burning_with_net_cash": 4798,
  "upper_bound_events": 3045,
@@ -89,6 +110,6 @@ facts fetched for 7600 companies
   "TENDER_OFFER": 102
  },
  "requests": 7338,
- "finished": "2026-11-17T19:15:41+00:00",
+ "finished": "2026-11-17T21:24:43+00:00",
  "verdict": "CONTINUE: upper bound clears 150 total and 60 holdout"
 }
