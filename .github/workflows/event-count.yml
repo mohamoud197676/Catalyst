@@ -1,3 +1,4 @@
+# Re-run 2026-11-17 after repository made public.
 # Step 3: the free feasibility count for H1 (SEC data only, no price data, no cost).
 # Runs when the counting script changes, or by hand. Takes up to a few hours at SEC's rate limit.
 name: event-count

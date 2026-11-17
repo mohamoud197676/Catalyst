@@ -1,3 +1,4 @@
+# Re-run 2026-11-17 after repository made public.
 # Live checks that close Phase 0. Runs on every push to main that touches code, or by hand.
 # Results are committed to results/ so they can be read without access to the Actions logs.
 name: smoke
