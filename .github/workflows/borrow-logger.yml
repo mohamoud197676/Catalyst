@@ -6,6 +6,9 @@
 name: borrow-logger
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/borrow-logger.yml", "scripts/fetch_borrow_raw.py"]
   schedule:
     - cron: "7,37 9-23 * * 1-5"      # UTC; covers 04:00-19:00 New York all year
 permissions:
