@@ -99,8 +99,15 @@ def main(start: int = 2010, end: int = 2025) -> int:
             missing += 1
             continue
         if nc["net_cash"] > 0 and burn > 0:
+            adj = nc["net_cash"] - 2 * burn
+            pf = conn.execute(
+                "SELECT value, period_end FROM fundamental_fact WHERE cik=? AND taxonomy='dei' AND tag='EntityPublicFloat' "
+                "AND filed_date<=? ORDER BY period_end DESC LIMIT 1", (cik, c["filed"])).fetchone()
             events.append({**c, "net_cash": nc["net_cash"], "quarterly_burn": burn,
-                           "runway_q": nc["net_cash"] / burn, "bs_date": nc["balance_sheet_date"]})
+                           "runway_q": nc["net_cash"] / burn, "bs_date": nc["balance_sheet_date"],
+                           "adjusted_net_cash": adj,
+                           "public_float": pf["value"] if pf else None, "float_date": pf["period_end"] if pf else None,
+                           "below_cash_proxy": bool(pf and adj > 0 and pf["value"] < adj)})
         if len(facts_cache) > 400 and i % 50 == 0:   # keep memory bounded on a small runner
             for k in list(facts_cache)[:-50]:
                 if facts_cache[k] is not None:
@@ -116,6 +123,15 @@ def main(start: int = 2010, end: int = 2025) -> int:
     by_year = collections.Counter(e["filed"][:4] for e in kept)
     by_trig = collections.Counter(e["trigger"] for e in kept)
     holdout = sum(1 for e in kept if "2020" <= e["filed"][:4] <= "2025")
+    proxy = [e for e in kept if e["below_cash_proxy"]]
+    has_float = [e for e in kept if e["public_float"] is not None]
+    log.update(positive_adjusted_cash=sum(e["adjusted_net_cash"] > 0 for e in kept),
+               with_public_float=len(has_float), below_cash_proxy_total=len(proxy),
+               below_cash_proxy_holdout=sum("2020" <= e["filed"][:4] <= "2025" for e in proxy),
+               below_cash_proxy_by_year=dict(sorted(collections.Counter(e["filed"][:4] for e in proxy).items())),
+               proxy_note=("Public float (non-affiliate market value, from the latest annual report cover known on the "
+                           "filing date) understates market value, so this proxy over-counts below-cash events. "
+                           "It is still an upper bound, tighter than the first."))
     log.update(fundamentals_missing=missing, burning_with_net_cash=len(events), upper_bound_events=len(kept),
                upper_bound_holdout=holdout, by_year=dict(sorted(by_year.items())), by_trigger=dict(by_trig),
                requests=client.requests_made, finished=core.iso(core.utcnow()),
@@ -127,6 +143,10 @@ def main(start: int = 2010, end: int = 2025) -> int:
         w.writeheader()
         for e in kept[:: max(1, len(kept) // 200)]:
             w.writerow(e)
+    with open(OUT / "below_cash_proxy_events.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(kept[0].keys()) if kept else ["none"])
+        w.writeheader()
+        w.writerows(proxy)
     print(json.dumps({k: v for k, v in log.items() if k != "notes"}, indent=1))
     return 0
 
