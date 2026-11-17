@@ -18,13 +18,14 @@ Paper mode only. There is no live-order code in this repository and a test fails
 | `src/catalyst/engine/model.py` | Corporate Move Engine: move model, payoff book, two-move search, Kelly-capped sizing |
 | `src/catalyst/backtest/events.py` | Event scorer and the frozen H1 verdict |
 | `src/catalyst/sim/` | Test-of-the-test simulation and six-month account simulation |
-| `tests/` | 63 offline tests |
+| `src/catalyst/sim/frontier.py` | Target frontier: win rate, win:loss, exposure and trade count a target requires |
+| `tests/` | 66 offline tests |
 | `scripts/`, `.github/workflows/` | Raw borrow archive job (untested) |
 
 ## Run it
 ```
 pip install exchange_calendars pytest
-python -m pytest -q                                   # 63 tests, offline
+python -m pytest -q                                   # 66 tests, offline
 python -m catalyst.cli simulate                        # instrument checks and six-month arithmetic
 export PYTHONPATH=src
 python -m catalyst.cli init-db
