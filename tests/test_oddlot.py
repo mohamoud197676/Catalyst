@@ -19,4 +19,4 @@ def test_detects_odd_lot_priority_and_price_range():
 def test_plain_tender_is_not_flagged():
     a = analyse(PLAIN)
     assert not a["odd_lot_priority"] and a["odd_lot_mentions"] == 0
-    assert a["prices"] == ["$3.10 per share net to the seller"]
+    assert a["prices"] == ["$3.10 per share"]
