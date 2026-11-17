@@ -1,0 +1,33 @@
+# Daily scan of SEC tender-offer filings for odd-lot priority (holders of under 100 shares
+# accepted in full). Results are committed to results/oddlot/. Read every hit by hand.
+name: oddlot-scan
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/scan_oddlot.py", "src/catalyst/edgar/oddlot.py", ".github/workflows/oddlot-scan.yml"]
+  schedule:
+    - cron: "17 23 * * 1-5"
+permissions:
+  contents: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install exchange_calendars
+      - name: scan
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python scripts/scan_oddlot.py 45
+      - name: commit results
+        run: |
+          git config user.name "catalyst-bot"
+          git config user.email "catalyst-bot@users.noreply.github.com"
+          git add results
+          git diff --cached --quiet || git commit -m "odd-lot scan $(date -u +%FT%TZ)"
+          git pull --rebase && git push
