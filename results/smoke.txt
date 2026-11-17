@@ -18,3 +18,11 @@ PASS  ibkr borrow file fetch + parse + append
       {'rows': 19972, 'unresolved_tickers': 19972, 'source_asof_raw': '2026.11.17 13:20:23', 'captured_at_utc': '2026-11-17T18:31:43+00:00'}
 run: 2026-11-17T18:31:45Z
 1 failed, 67 passed, 4 warnings in 3.50s
+PASS  edgar submissions fetch + parse (CIK 320193)
+      {'cik': 320193, 'seen': 1003, 'new': 1003, 'listing_events': 0, 'tickers': ['AAPL']}
+PASS  acceptance time: JSON (UTC) equals SGML header (Eastern)
+      {'status': 'MATCH', 'diff_seconds': 0.0, 'json_utc': '2026-11-16T21:49:16+00:00', 'sgml_as_et_utc': '2026-11-16T21:49:16+00:00'}
+PASS  ibkr borrow file fetch + parse + append
+      {'rows': 19972, 'unresolved_tickers': 19972, 'source_asof_raw': '2026.11.17 13:20:23', 'captured_at_utc': '2026-11-17T18:35:02+00:00'}
+run: 2026-11-17T18:35:03Z
+68 passed, 4 warnings in 2.62s
