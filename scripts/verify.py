@@ -1,4 +1,4 @@
-"""Verification pass run on GitHub (it can reach the SEC directly).
+"""Verification pass run on GitHub (re-run 2026-11-19 for new odd-lot hits) (it can reach the SEC directly).
 
 A. Odd-lot offers flagged by the scanner: pull expiry wording, price terms and any later
    tender-offer filings by the same company (amendments, final results).
