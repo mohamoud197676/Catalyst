@@ -1,0 +1,29 @@
+{
+ "dev_events": 142,
+ "excluded": 33,
+ "kept": 109,
+ "moves_all": {
+  "STATUS_QUO": 51,
+  "DILUTIVE_RAISE": 41,
+  "DELISTED": 9,
+  "TENDER_OFFER": 5,
+  "BANKRUPTCY": 2,
+  "MERGER_UNCLEAR": 1
+ },
+ "kept_float_20m_plus": 11,
+ "moves_float_20m_plus": {
+  "STATUS_QUO": 5,
+  "DILUTIVE_RAISE": 5,
+  "DELISTED": 1
+ },
+ "exclusion_reasons": {
+  "SIC 6022": 6,
+  "SIC 6770": 6,
+  "SIC 6021": 6,
+  "SIC 6794": 5,
+  "China or Taiwan business address": 4,
+  "SIC 6035": 4,
+  "SIC 6311": 1,
+  "SIC 6798": 1
+ }
+}
