@@ -10,7 +10,8 @@ on:
     branches: [main]
     paths: [".github/workflows/borrow-logger.yml", "scripts/fetch_borrow_raw.py"]
   schedule:
-    - cron: "7,37 9-23 * * 1-5"      # UTC; covers 04:00-19:00 New York all year
+    - cron: "*/10 9-23 * * 1-5"      # UTC. Every 10 min because GitHub skips many scheduled runs;
+                                     # duplicates are harmless (each snapshot is its own file)
 permissions:
   contents: write
 jobs:
